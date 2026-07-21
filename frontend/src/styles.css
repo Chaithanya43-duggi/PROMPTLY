@@ -1,0 +1,296 @@
+/* ============================================================
+   Promptly — Injected Styles
+   Floating pill, mirror overlay, wavy underlines, tooltip card.
+   All critical properties use !important to prevent host-page
+   CSS from overriding them.
+   ============================================================ */
+
+/* ─── Floating Pill ──────────────────────────────────────────── */
+.promptly-pill {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.35), 0 0 0 2px rgba(255,255,255,0.08) !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  user-select: none !important;
+  z-index: 2147483646 !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  overflow: visible !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+.promptly-pill:hover {
+  transform: scale(1.12) !important;
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.5), 0 0 0 3px rgba(255,255,255,0.12) !important;
+}
+
+.promptly-pill-letter {
+  color: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  display: inline !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  text-decoration: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.promptly-pill-badge {
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  padding: 0 4px !important;
+  border-radius: 8px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1 !important;
+  border: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.promptly-badge-red {
+  background: #ef4444 !important;
+}
+
+.promptly-badge-blue {
+  background: #3b82f6 !important;
+}
+
+.promptly-badge-green {
+  background: #22c55e !important;
+}
+
+/* ─── Mirror Overlay ─────────────────────────────────────────── */
+.promptly-mirror {
+  position: fixed !important;
+  pointer-events: none !important;
+  color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  overflow: hidden !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  z-index: 2147483645 !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.promptly-mirror mark,
+.promptly-mirror .promptly-mark {
+  background: transparent !important;
+  color: transparent !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-radius: 2px !important;
+}
+
+/* ─── Wavy Underline Decorations ─────────────────────────────── */
+.promptly-clarity {
+  text-decoration: underline wavy #ef4444 1.5px !important;
+  text-underline-offset: 3px !important;
+}
+
+.promptly-context {
+  text-decoration: underline wavy #3b82f6 1.5px !important;
+  text-underline-offset: 3px !important;
+}
+
+.promptly-constraints {
+  text-decoration: underline wavy #22c55e 1.5px !important;
+  text-underline-offset: 3px !important;
+}
+
+.promptly-clarity:hover { background: rgba(239, 68, 68, 0.12) !important; }
+.promptly-context:hover { background: rgba(59, 130, 246, 0.12) !important; }
+.promptly-constraints:hover { background: rgba(34, 197, 94, 0.12) !important; }
+
+/* ─── Tooltip Card ───────────────────────────────────────────── */
+.promptly-tooltip {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  width: 310px !important;
+  padding: 14px 16px !important;
+  border-radius: 14px !important;
+  background: rgba(15, 23, 42, 0.96) !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.04) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  color: #e2e8f0 !important;
+  animation: promptly-fade-in 0.15s ease-out !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  overflow: visible !important;
+  text-align: left !important;
+}
+
+@keyframes promptly-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.promptly-tooltip-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 10px !important;
+}
+
+.promptly-tooltip-category {
+  display: inline-block !important;
+  padding: 2px 10px !important;
+  border-radius: 20px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  border: 1px solid !important;
+  line-height: 1.6 !important;
+}
+
+.promptly-tooltip-close {
+  background: none !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  padding: 0 4px !important;
+  line-height: 1 !important;
+  transition: color 0.15s !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+.promptly-tooltip-close:hover {
+  color: #f1f5f9 !important;
+}
+
+.promptly-tooltip-desc {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  color: #cbd5e1 !important;
+  margin: 0 0 12px 0 !important;
+  padding: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.promptly-tooltip-suggestion {
+  background: rgba(2, 6, 23, 0.6) !important;
+  border: 1px solid rgba(51, 65, 85, 0.5) !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.promptly-tooltip-suggestion-label {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  color: #64748b !important;
+  margin-bottom: 4px !important;
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace !important;
+}
+
+.promptly-tooltip-suggestion-text {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #4ade80 !important;
+  line-height: 1.4 !important;
+  white-space: pre-wrap !important;
+}
+
+.promptly-tooltip-accept {
+  display: block !important;
+  width: 100% !important;
+  padding: 8px 14px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  background: #059669 !important;
+  color: #022c22 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  min-width: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.promptly-tooltip-accept:hover {
+  background: #10b981 !important;
+}
+
+.promptly-tooltip-accept:active {
+  background: #047857 !important;
+}
+
+/* ─── Suggestion Glow Animation ─────────────────────────────── */
+.promptly-suggestion-glow {
+  animation: promptly-glow-pulse 2s ease-in-out infinite !important;
+}
+
+@keyframes promptly-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+    border-color: rgba(51, 65, 85, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(74, 222, 128, 0.15);
+    border-color: rgba(74, 222, 128, 0.35);
+  }
+}
+
+/* ─── No-Suggestion Fallback ────────────────────────────────── */
+.promptly-no-suggestion {
+  border-color: rgba(100, 116, 139, 0.3) !important;
+}
+
+.promptly-no-suggestion-text {
+  color: #94a3b8 !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+}
