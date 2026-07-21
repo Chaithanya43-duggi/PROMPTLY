@@ -1,22 +1,22 @@
-# Promptly — The Grammarly for Prompts 🚀
+# Promptly — The Grammarly for Prompts
 
-Promptly is a real-time, AI-powered Chrome Extension designed to optimize and refine your prompts directly inside popular AI chat interfaces (ChatGPT, Claude, and Gemini). Think of it as **Grammarly, but tailored specifically for prompt engineering**.
+Promptly is a real-time, AI-powered Chrome extension that optimizes and refines prompts directly inside popular AI chat interfaces (ChatGPT, Claude, and Gemini). Think of it as **Grammarly, purpose-built for prompt engineering**.
 
-It highlights clarity issues, missing context, and vague constraints as you type, and lets you apply instant optimizations inline with a single click.
-
----
-
-## 🌟 Key Features
-
-* **Real-time In-page Highlights**: Sub-second text underlining (Red for Clarity, Blue for Context, Green for Constraints) directly on top of the text inputs of AI chats.
-* **Floating Widget Pill**: Displays the current issue count and serves as an entry point for quick optimizations.
-* **Inline Optimization Cards**: Click on any marked word/phrase to view the issue explanation and accept the suggested correction.
-* **Seamless State Synchronization**: Bypasses React and Svelte state bindings to inject fixes without breaking the host platforms' editor state.
-* **Local + AI Pipeline**: Combined rule-based parser and Gemini-powered semantic analyzer with automatic model fallback (`gemini-3.5-flash-lite` → `gemini-3.5-flash` → `gemini-2.0-flash-lite`) and rate-limit retries.
+It highlights clarity issues, missing context, and vague constraints as you type, and lets you apply optimizations inline with a single click.
 
 ---
 
-## 🏗️ Architecture
+## Key Features
+
+- **Real-time in-page highlighting** — sub-second underlining (red for clarity, blue for context, green for constraints) directly over the text input of supported AI chat platforms.
+- **Floating widget pill** — displays the current issue count and serves as a quick entry point for optimizations.
+- **Inline optimization cards** — click any marked phrase to view an explanation and accept the suggested correction.
+- **Seamless state synchronization** — updates React and Svelte-controlled text inputs without breaking the host platform's editor state.
+- **Local + AI pipeline** — a rule-based parser paired with a Gemini-powered semantic analyzer, with automatic model fallback (`gemini-3.5-flash-lite` → `gemini-3.5-flash` → `gemini-2.0-flash-lite`) and built-in rate-limit retries.
+
+---
+
+## Architecture
 
 ```mermaid
 graph TD
@@ -24,17 +24,17 @@ graph TD
         A["DOM Scanner (MutationObserver)"] -->|detects textarea| B["Input Listeners (Debounced)"]
         B -->|POST /api/analyze| C["Background Worker Proxy"]
         C -->|HTTP Response| D["Widget Overlay Engine"]
-        D -->|injects fixed markings| E["Mirror Div Overlay"]
+        D -->|injects fix markers| E["Mirror Div Overlay"]
         D -->|updates count| F["Floating Pill Widget"]
         E -->|click underline| G["Tooltip Popover Card"]
         F -->|click pill| G
-        G -->|Accept Fix| H["React Event Dispatch Bypass"]
+        G -->|accept fix| H["Editor State Sync"]
         H -->|updates text| B
     end
 
     subgraph Backend ["FastAPI Server (Port 8000)"]
         C -.->|JSON API| API["/api/analyze"]
-        API --> Pipeline["Local + AI pipeline"]
+        API --> Pipeline["Local + AI Pipeline"]
         Pipeline --> LocalParser["Local NLP Rules"]
         Pipeline --> AIEngine["Gemini AI Analyzer"]
         AIEngine --> Gemini["Google GenAI API"]
@@ -43,46 +43,46 @@ graph TD
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 promptly/
-├── backend/                  # Python FastAPI Backend (Modular Design)
+├── backend/                      # Python FastAPI backend (modular design)
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── v1/
 │   │   │       ├── endpoints/
-│   │   │       │   └── analyze.py  # Route endpoints
-│   │   │       └── router.py       # Unified router registry
+│   │   │       │   └── analyze.py   # Route endpoints
+│   │   │       └── router.py        # Unified router registry
 │   │   ├── core/
-│   │   │   └── config.py           # Configuration manager
+│   │   │   └── config.py            # Configuration manager
 │   │   ├── models/
-│   │   │   └── schemas.py          # Pydantic schemas
+│   │   │   └── schemas.py           # Pydantic schemas
 │   │   ├── services/
-│   │   │   ├── ai_engine.py        # Gemini Client fallbacks
-│   │   │   ├── local_nlp.py        # Local rules heuristics
-│   │   │   └── pipeline.py         # Pipeline analyzer
-│   │   └── main.py                 # FastAPI Startup config
-│   ├── tests/                      # Coordinate tests
+│   │   │   ├── ai_engine.py         # Gemini client + fallback logic
+│   │   │   ├── local_nlp.py         # Local rule-based heuristics
+│   │   │   └── pipeline.py          # Pipeline orchestrator
+│   │   └── main.py                  # FastAPI app entry point
+│   ├── tests/                       # Integration tests
 │   ├── .env.example
-│   ├── Dockerfile                  # Production containerization build
-│   ├── pyproject.toml              # Build & dependency metadata
+│   ├── Dockerfile                   # Production container build
+│   ├── pyproject.toml               # Build & dependency metadata
 │   └── requirements.txt
 │
-└── frontend/                 # Manifest V3 Chrome Extension
+└── frontend/                     # Manifest V3 Chrome extension
     ├── assets/
-    │   └── icons/                  # CENTRALIZED extension icons
+    │   └── icons/                    # Extension icons
     ├── src/
-    │   ├── background.js           # Worker script proxy
-    │   ├── content.js              # DOM scanner & page observer
-    │   ├── widget.js               # Render engine & State-sync
-    │   └── styles.css              # Isolated styles
+    │   ├── background.js             # Worker script proxy
+    │   ├── content.js                # DOM scanner & page observer
+    │   ├── widget.js                 # Render engine & state sync
+    │   └── styles.css                # Isolated overlay styles
     └── manifest.json
 ```
 
 ---
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 ### 1. Backend Setup
 
@@ -93,18 +93,20 @@ promptly/
 2. Create and activate a Python virtual environment:
    ```bash
    python -m venv venv
-   # On Windows:
-   .\venv\Scripts\activate
-   # On macOS/Linux:
+
+   # macOS/Linux
    source venv/bin/activate
+
+   # Windows
+   .\venv\Scripts\activate
    ```
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. Set up environment variables:
-   * Copy `.env.example` to `.env`.
-   * Add your Gemini API key:
+4. Configure environment variables:
+   - Copy `.env.example` to `.env`.
+   - Add your Gemini API key:
      ```env
      GEMINI_API_KEY=your_gemini_api_key_here
      ```
@@ -115,32 +117,40 @@ promptly/
 
 ### 2. Chrome Extension Setup
 
-1. Open Google Chrome and navigate to `chrome://extensions/`.
-2. Enable **Developer Mode** by toggling the switch in the top right.
-3. Click the **Load unpacked** button in the top left.
+1. Open Chrome and go to `chrome://extensions/`.
+2. Enable **Developer mode** (top right).
+3. Click **Load unpacked**.
 4. Select the `frontend/` folder from this repository.
-5. The **Promptly — Grammarly for Prompts** extension will now be loaded!
+5. **Promptly — Grammarly for Prompts** is now installed and active.
 
 ---
 
-## 🚀 How to Run & Test
+## How to Run & Test
 
-1. Ensure the backend server is running on `http://127.0.0.1:8000`.
+1. Confirm the backend server is running at `http://127.0.0.1:8000`.
 2. Open [ChatGPT](https://chatgpt.com/), [Claude](https://claude.ai/), or [Gemini](https://gemini.google.com/).
-3. Type a vague or poorly constructed prompt, for example:
+3. Type a vague or underspecified prompt, for example:
    > *make a website it should be engaging and not too long*
-4. Pause for `1.5 seconds`.
-5. You will see colored wavy underlines appear:
-   * **Red (Clarity)**: Underlines *"make a"* (suggests *"Compose a structured"*).
-   * **Blue (Context)**: Underlines *"website"* (suggests a targeted topic/audience).
-   * **Green (Constraints)**: Underlines *"engaging"* and *"not too long"* (suggests concrete metrics).
-6. Click any underlined text or the floating **P** pill widget to open the optimization card.
-7. Click **✦ Accept Optimization** to replace the text instantly!
+4. Pause for about 1.5 seconds.
+5. Colored underlines will appear:
+   - **Red (Clarity):** flags *"make a"* → suggests *"Compose a structured"*.
+   - **Blue (Context):** flags *"website"* → suggests specifying a target topic or audience.
+   - **Green (Constraints):** flags *"engaging"* and *"not too long"* → suggests concrete, measurable criteria.
+6. Click any underlined text, or the floating **P** pill, to open the optimization card.
+7. Click **Accept Optimization** to replace the text instantly.
 
 ---
 
-## 🧪 Tech Stack
+## Tech Stack
 
-* **Backend**: FastAPI, Pydantic, Google GenAI SDK, Python-dotenv, Uvicorn
-* **Frontend**: Vanilla Javascript (ES6), HTML5, CSS3 (Injected overlays & animations)
-* **Manifest Version**: Chrome Extension Manifest V3
+| Layer | Technologies |
+|---|---|
+| Backend | FastAPI, Pydantic, Google GenAI SDK, python-dotenv, Uvicorn |
+| Frontend | Vanilla JavaScript (ES6), HTML5, CSS3 (injected overlays & animations) |
+| Platform | Chrome Extension Manifest V3 |
+
+---
+
+## License
+
+Add license details here (e.g., MIT, Apache 2.0) once finalized.
